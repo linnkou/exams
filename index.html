@@ -5,9 +5,9 @@
   <title>محرر مواضيع الاختبارات</title>
   <!-- تحميل TinyMCE مع مفتاح API -->
   <script src="https://cdn.tiny.cloud/1/i8duevhin8sitf2d7edghug4fr7lqr9x2rlezipiul7y3c17/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-  <!-- تحميل MathJax -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- تحميل KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
   <!-- CSS الداخلي -->
   <style>
     body {
@@ -34,10 +34,6 @@
     .tox-tbtn__select-label {
       font-family: 'Cairo', sans-serif;
     }
-
-    .MathJax {
-      font-family: 'Cairo', sans-serif;
-    }
   </style>
 </head>
 <body>
@@ -50,17 +46,11 @@
       language: 'ar', // تعيين اللغة إلى العربية
       directionality: 'rtl', // تعيين الاتجاه إلى اليمين
       plugins: [
-        'link', 'image', 'table', 'lists', 'media', 'wordcount', 'mathjax' // إضافة ميزة MathJax
+        'link', 'image', 'table', 'lists', 'media', 'wordcount'
       ],
       toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist | mathjax',
       content_css: 'https://fonts.googleapis.com/css?family=Cairo&display=swap', // تحسين الخطوط
       font_formats: 'Cairo=Cairo', // تعيين خطوط مخصصة
-      mathjax_usage: 'mathjax', // تفعيل MathJax
-      mathjax_config: {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        }
-      },
       setup: function (editor) {
         editor.ui.registry.addButton('mathjax', {
           text: 'معادلة رياضية',
@@ -85,33 +75,39 @@
                   },
                   {
                     type: 'panel',
+                    layout: 'grid',
+                    columns: 4,
                     items: [
                       {
                         type: 'button',
                         text: 'x^2',
                         onAction: function () {
-                          editor.windowManager.getWindows()[0].getData().equation += 'x^2';
+                          const currentEquation = editor.windowManager.getWindows()[0].getData().equation;
+                          editor.windowManager.getWindows()[0].setData({ equation: currentEquation + 'x^2' });
                         }
                       },
                       {
                         type: 'button',
                         text: '√x',
                         onAction: function () {
-                          editor.windowManager.getWindows()[0].getData().equation += '\\sqrt{x}';
+                          const currentEquation = editor.windowManager.getWindows()[0].getData().equation;
+                          editor.windowManager.getWindows()[0].setData({ equation: currentEquation + '\\sqrt{x}' });
                         }
                       },
                       {
                         type: 'button',
                         text: '∑',
                         onAction: function () {
-                          editor.windowManager.getWindows()[0].getData().equation += '\\sum';
+                          const currentEquation = editor.windowManager.getWindows()[0].getData().equation;
+                          editor.windowManager.getWindows()[0].setData({ equation: currentEquation + '\\sum' });
                         }
                       },
                       {
                         type: 'button',
                         text: '∫',
                         onAction: function () {
-                          editor.windowManager.getWindows()[0].getData().equation += '\\int';
+                          const currentEquation = editor.windowManager.getWindows()[0].getData().equation;
+                          editor.windowManager.getWindows()[0].setData({ equation: currentEquation + '\\int' });
                         }
                       }
                     ]
@@ -131,7 +127,10 @@
               ],
               onSubmit: function (api) {
                 const equation = api.getData().equation;
-                editor.insertContent(`$$${equation}$$`);
+                const renderedEquation = katex.renderToString(equation, {
+                  throwOnError: false
+                });
+                editor.insertContent(renderedEquation);
                 api.close();
               }
             });
