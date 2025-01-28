@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-100 flex flex-col items-center min-h-screen">
@@ -24,23 +25,36 @@
         <h1 class="text-2xl font-bold text-center mb-6">محرر النصوص والمعادلات</h1>
 
         <!-- شريط الأدوات -->
-        <div class="toolbar bg-gray-200 p-2 rounded-t-lg flex space-x-2 mb-4">
-            <button onclick="formatText('bold')" class="p-2 hover:bg-gray-300 rounded">B</button>
-            <button onclick="formatText('italic')" class="p-2 hover:bg-gray-300 rounded">I</button>
-            <button onclick="formatText('underline')" class="p-2 hover:bg-gray-300 rounded">U</button>
-            <button onclick="formatText('justifyLeft')" class="p-2 hover:bg-gray-300 rounded">&#xf036;</button>
-            <button onclick="formatText('justifyCenter')" class="p-2 hover:bg-gray-300 rounded">&#xf037;</button>
-            <button onclick="formatText('justifyRight')" class="p-2 hover:bg-gray-300 rounded">&#xf038;</button>
-            <button onclick="formatText('insertUnorderedList')" class="p-2 hover:bg-gray-300 rounded">&#xf0ca;</button>
-            <button onclick="formatText('insertOrderedList')" class="p-2 hover:bg-gray-300 rounded">&#xf0cb;</button>
+        <div class="toolbar bg-gray-200 p-2 rounded-t-lg flex flex-wrap space-x-2 mb-4">
+            <button onclick="formatText('bold')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-bold"></i></button>
+            <button onclick="formatText('italic')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-italic"></i></button>
+            <button onclick="formatText('underline')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-underline"></i></button>
+            <button onclick="formatText('justifyLeft')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-align-left"></i></button>
+            <button onclick="formatText('justifyCenter')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-align-center"></i></button>
+            <button onclick="formatText('justifyRight')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-align-right"></i></button>
+            <button onclick="formatText('insertUnorderedList')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-list-ul"></i></button>
+            <button onclick="formatText('insertOrderedList')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-list-ol"></i></button>
             <input type="color" onchange="changeColor(this.value)" class="p-1">
-            <button onclick="insertMath()" class="p-2 hover:bg-gray-300 rounded">إدراج معادلة</button>
-            <button onclick="insertTable()" class="p-2 hover:bg-gray-300 rounded">إدراج جدول</button>
+            <button onclick="insertMath()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-square-root-alt"></i></button>
+            <button onclick="insertTable()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-table"></i></button>
             <input type="file" id="imageUpload" accept="image/*" onchange="insertImage(event)" style="display: none;">
-            <button onclick="document.getElementById('imageUpload').click()" class="p-2 hover:bg-gray-300 rounded">إدراج صورة</button>
-            <button onclick="exportToPDF()" class="p-2 hover:bg-gray-300 rounded">تصدير إلى PDF</button>
-            <button onclick="exportToTXT()" class="p-2 hover:bg-gray-300 rounded">تصدير إلى TXT</button>
-            <button onclick="toggleDarkMode()" class="p-2 hover:bg-gray-300 rounded">وضع ليلي</button>
+            <button onclick="document.getElementById('imageUpload').click()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-image"></i></button>
+            <button onclick="exportToPDF()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-file-pdf"></i></button>
+            <button onclick="exportToTXT()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-file-alt"></i></button>
+            <button onclick="toggleDarkMode()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-moon"></i></button>
+            <select onchange="changeFontSize(this.value)" class="p-2 hover:bg-gray-300 rounded">
+                <option value="12px">12px</option>
+                <option value="14px">14px</option>
+                <option value="16px">16px</option>
+                <option value="18px">18px</option>
+                <option value="20px">20px</option>
+            </select>
+            <select onchange="changeFontFamily(this.value)" class="p-2 hover:bg-gray-300 rounded">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Verdana">Verdana</option>
+            </select>
         </div>
 
         <!-- المحرر -->
