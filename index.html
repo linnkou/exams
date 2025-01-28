@@ -3,13 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>محرر مواضيع الاختبارات</title>
-  <!-- تحميل TinyMCE -->
+  <!-- تحميل TinyMCE المجاني -->
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <!-- تحميل MathJax -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <!-- ربط ملف CSS المخصص -->
-  <link rel="stylesheet" href="styles.css">
+  <!-- CSS الداخلي -->
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      margin: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    textarea {
+      width: 100%;
+      height: 400px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+    }
+
+    .tox-tbtn__select-label {
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .MathJax {
+      font-family: 'Cairo', sans-serif;
+    }
+  </style>
 </head>
 <body>
   <h1>محرر مواضيع الاختبارات</h1>
@@ -20,10 +49,18 @@
       selector: '#editor',
       language: 'ar', // تعيين اللغة إلى العربية
       directionality: 'rtl', // تعيين الاتجاه إلى اليمين
-      plugins: 'link image table lists', // إضافة ميزات مثل الروابط والصور والجداول
-      toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist',
+      plugins: [
+        'link', 'image', 'table', 'lists', 'media', 'wordcount', 'mathjax' // إضافة ميزة MathJax
+      ],
+      toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist | mathjax',
       content_css: 'https://fonts.googleapis.com/css?family=Cairo&display=swap', // تحسين الخطوط
       font_formats: 'Cairo=Cairo', // تعيين خطوط مخصصة
+      mathjax_usage: 'mathjax', // تفعيل MathJax
+      mathjax_config: {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      },
       setup: function (editor) {
         editor.ui.registry.addContextToolbar('img', {
           predicate: function (node) {
@@ -32,11 +69,6 @@
           items: 'link imageoptions',
           position: 'node',
           context: 'image'
-        });
-      },
-      init_instance_callback: function (editor) {
-        editor.on('NodeChange', function (e) {
-          MathJax.typesetPromise([e.element]);
         });
       }
     });
