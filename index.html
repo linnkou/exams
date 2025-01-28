@@ -48,11 +48,11 @@
       plugins: [
         'link', 'image', 'table', 'lists', 'media', 'wordcount'
       ],
-      toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist | mathjax',
+      toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist | insertmath',
       content_css: 'https://fonts.googleapis.com/css?family=Cairo&display=swap', // تحسين الخطوط
       font_formats: 'Cairo=Cairo', // تعيين خطوط مخصصة
       setup: function (editor) {
-        editor.ui.registry.addButton('mathjax', {
+        editor.ui.registry.addButton('insertmath', {
           text: 'معادلة رياضية',
           icon: '∑', // رمز المعادلة
           onAction: function () {
