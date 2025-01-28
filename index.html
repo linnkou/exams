@@ -77,6 +77,44 @@
                     name: 'equation',
                     label: 'اكتب المعادلة هنا',
                     placeholder: 'مثال: x^2 + 5x + 6 = 0'
+                  },
+                  {
+                    type: 'label',
+                    text: 'رموز رياضية شائعة:',
+                    forId: 'symbols'
+                  },
+                  {
+                    type: 'panel',
+                    items: [
+                      {
+                        type: 'button',
+                        text: 'x^2',
+                        onAction: function () {
+                          editor.windowManager.getWindows()[0].getData().equation += 'x^2';
+                        }
+                      },
+                      {
+                        type: 'button',
+                        text: '√x',
+                        onAction: function () {
+                          editor.windowManager.getWindows()[0].getData().equation += '\\sqrt{x}';
+                        }
+                      },
+                      {
+                        type: 'button',
+                        text: '∑',
+                        onAction: function () {
+                          editor.windowManager.getWindows()[0].getData().equation += '\\sum';
+                        }
+                      },
+                      {
+                        type: 'button',
+                        text: '∫',
+                        onAction: function () {
+                          editor.windowManager.getWindows()[0].getData().equation += '\\int';
+                        }
+                      }
+                    ]
                   }
                 ]
               },
