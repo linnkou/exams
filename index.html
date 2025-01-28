@@ -6,10 +6,11 @@
     <title>محرر النصوص والمعادلات</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
-    <div class="container mx-auto mt-10 p-4 bg-white rounded shadow">
+    <div class="container mx-auto mt-10 p-4 bg-white rounded shadow" id="app">
         <h1 class="text-2xl font-bold text-center mb-4">محرر النصوص والمعادلات</h1>
 
         <!-- شريط الأدوات -->
@@ -17,11 +18,19 @@
             <button onclick="formatText('bold')" class="bg-blue-500 text-white px-4 py-2 rounded">عريض</button>
             <button onclick="formatText('italic')" class="bg-blue-500 text-white px-4 py-2 rounded">مائل</button>
             <button onclick="insertMath()" class="bg-green-500 text-white px-4 py-2 rounded">إدراج معادلة</button>
+            <button onclick="exportToPDF()" class="bg-purple-500 text-white px-4 py-2 rounded">تصدير PDF</button>
+            <button onclick="toggleTheme()" class="bg-gray-500 text-white px-4 py-2 rounded">الوضع الداكن</button>
         </div>
 
         <!-- المحرر -->
         <div id="editor" contenteditable="true" class="editor border border-gray-300 p-4 rounded bg-gray-50 min-h-[200px]">
             ابدأ بالكتابة هنا...
+        </div>
+
+        <!-- معاينة المعادلات -->
+        <div class="preview mt-4 p-4 border border-gray-300 rounded bg-gray-50">
+            <h2 class="font-bold text-lg mb-2">معاينة المعادلة:</h2>
+            <div id="latex-preview" class="text-gray-600 italic">اكتب معادلة لرؤيتها هنا...</div>
         </div>
     </div>
 
