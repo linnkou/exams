@@ -1,68 +1,45 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرر النصوص والمعادلات</title>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>محرر مواضيع الاختبارات</title>
+  <!-- تحميل TinyMCE -->
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <!-- تحميل MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- ربط ملف CSS المخصص -->
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 flex flex-col items-center min-h-screen">
+<body>
+  <h1>محرر مواضيع الاختبارات</h1>
+  <textarea id="editor" name="content"></textarea>
 
-    <!-- شريط التنقل -->
-    <nav class="w-full bg-blue-600 text-white py-4 px-8">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">محرر النصوص والمعادلات</h1>
-            <a href="#" class="text-sm hover:underline">المساعدة</a>
-        </div>
-    </nav>
-
-    <!-- المحتوى -->
-    <div class="bg-white p-6 rounded shadow-md w-full max-w-4xl mt-6">
-        <h1 class="text-2xl font-bold text-center mb-6">محرر النصوص والمعادلات</h1>
-
-        <!-- شريط الأدوات -->
-        <div class="toolbar bg-gray-200 p-2 rounded-t-lg flex flex-wrap space-x-2 mb-4">
-            <button onclick="formatText('bold')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-bold"></i></button>
-            <button onclick="formatText('italic')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-italic"></i></button>
-            <button onclick="formatText('underline')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-underline"></i></button>
-            <button onclick="formatText('justifyLeft')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-align-left"></i></button>
-            <button onclick="formatText('justifyCenter')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-align-center"></i></button>
-            <button onclick="formatText('justifyRight')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-align-right"></i></button>
-            <button onclick="formatText('insertUnorderedList')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-list-ul"></i></button>
-            <button onclick="formatText('insertOrderedList')" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-list-ol"></i></button>
-            <input type="color" onchange="changeColor(this.value)" class="p-1">
-            <button onclick="insertMath()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-square-root-alt"></i></button>
-            <button onclick="insertTable()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-table"></i></button>
-            <input type="file" id="imageUpload" accept="image/*" onchange="insertImage(event)" style="display: none;">
-            <button onclick="document.getElementById('imageUpload').click()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-image"></i></button>
-            <button onclick="exportToPDF()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-file-pdf"></i></button>
-            <button onclick="exportToTXT()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-file-alt"></i></button>
-            <button onclick="toggleDarkMode()" class="p-2 hover:bg-gray-300 rounded"><i class="fas fa-moon"></i></button>
-            <select onchange="changeFontSize(this.value)" class="p-2 hover:bg-gray-300 rounded">
-                <option value="12px">12px</option>
-                <option value="14px">14px</option>
-                <option value="16px">16px</option>
-                <option value="18px">18px</option>
-                <option value="20px">20px</option>
-            </select>
-            <select onchange="changeFontFamily(this.value)" class="p-2 hover:bg-gray-300 rounded">
-                <option value="Arial">Arial</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Courier New">Courier New</option>
-                <option value="Verdana">Verdana</option>
-            </select>
-        </div>
-
-        <!-- المحرر -->
-        <div id="editor" contenteditable="true" class="border border-gray-300 p-4 rounded bg-gray-50 min-h-[300px] text-lg editor">
-            ابدأ الكتابة هنا...
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+  <script>
+    tinymce.init({
+      selector: '#editor',
+      language: 'ar', // تعيين اللغة إلى العربية
+      directionality: 'rtl', // تعيين الاتجاه إلى اليمين
+      plugins: 'link image table lists', // إضافة ميزات مثل الروابط والصور والجداول
+      toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist',
+      content_css: 'https://fonts.googleapis.com/css?family=Cairo&display=swap', // تحسين الخطوط
+      font_formats: 'Cairo=Cairo', // تعيين خطوط مخصصة
+      setup: function (editor) {
+        editor.ui.registry.addContextToolbar('img', {
+          predicate: function (node) {
+            return node.nodeName.toLowerCase() === 'img';
+          },
+          items: 'link imageoptions',
+          position: 'node',
+          context: 'image'
+        });
+      },
+      init_instance_callback: function (editor) {
+        editor.on('NodeChange', function (e) {
+          MathJax.typesetPromise([e.element]);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
