@@ -3,6 +3,11 @@
     text-align: right;
     line-height: 1.6;
     font-family: 'Arial', sans-serif;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-height: 300px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .editor:focus {
@@ -28,6 +33,7 @@
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .toolbar button:hover, .toolbar select:hover {
