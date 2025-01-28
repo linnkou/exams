@@ -5,32 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محرر النصوص والمعادلات</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<body class="bg-gray-100 flex flex-col items-center min-h-screen">
 
-    <div class="container mx-auto mt-10 p-4 bg-white rounded shadow" id="app">
-        <h1 class="text-2xl font-bold text-center mb-4">محرر النصوص والمعادلات</h1>
-
-        <!-- شريط الأدوات -->
-        <div class="toolbar flex gap-2 mb-4">
-            <button onclick="formatText('bold')" class="bg-blue-500 text-white px-4 py-2 rounded">عريض</button>
-            <button onclick="formatText('italic')" class="bg-blue-500 text-white px-4 py-2 rounded">مائل</button>
-            <button onclick="insertMath()" class="bg-green-500 text-white px-4 py-2 rounded">إدراج معادلة</button>
-            <button onclick="exportToPDF()" class="bg-purple-500 text-white px-4 py-2 rounded">تصدير PDF</button>
-            <button onclick="toggleTheme()" class="bg-gray-500 text-white px-4 py-2 rounded">الوضع الداكن</button>
+    <!-- شريط التنقل -->
+    <nav class="w-full bg-blue-600 text-white py-4 px-8">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">محرر النصوص والمعادلات</h1>
+            <a href="#" class="text-sm hover:underline">المساعدة</a>
         </div>
+    </nav>
+
+    <!-- المحتوى -->
+    <div class="bg-white p-6 rounded shadow-md w-full max-w-4xl mt-6">
+        <h1 class="text-2xl font-bold text-center mb-6">محرر النصوص والمعادلات</h1>
 
         <!-- المحرر -->
-        <div id="editor" contenteditable="true" class="editor border border-gray-300 p-4 rounded bg-gray-50 min-h-[200px]">
-            ابدأ بالكتابة هنا...
+        <div id="editor" contenteditable="true" class="border border-gray-300 p-4 rounded bg-gray-50 min-h-[300px] text-lg">
+            ابدأ الكتابة هنا...
         </div>
 
-        <!-- معاينة المعادلات -->
-        <div class="preview mt-4 p-4 border border-gray-300 rounded bg-gray-50">
-            <h2 class="font-bold text-lg mb-2">معاينة المعادلة:</h2>
-            <div id="latex-preview" class="text-gray-600 italic">اكتب معادلة لرؤيتها هنا...</div>
+        <!-- الأزرار -->
+        <div class="mt-4 flex justify-between">
+            <button onclick="insertMath()" class="bg-green-500 text-white px-4 py-2 rounded">إدراج معادلة</button>
+            <button onclick="exportToPDF()" class="bg-blue-500 text-white px-4 py-2 rounded">تحميل PDF</button>
         </div>
     </div>
 
