@@ -8,6 +8,16 @@ function changeColor(color) {
     formatText('foreColor', color);
 }
 
+// تغيير حجم الخط
+function changeFontSize(size) {
+    document.execCommand('fontSize', false, size);
+}
+
+// تغيير نوع الخط
+function changeFontFamily(font) {
+    document.execCommand('fontName', false, font);
+}
+
 // إدراج معادلة
 function insertMath() {
     const math = prompt("اكتب معادلتك بصيغة LaTeX:");
