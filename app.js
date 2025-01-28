@@ -1,6 +1,37 @@
 // تنسيق النص
 function formatText(command, value = null) {
-    document.execCommand(command, false, value);
+    const selection = window.getSelection();
+    const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : document.createRange();
+    const newNode = document.createElement(command === 'insertOrderedList' || command === 'insertUnorderedList' ? 'ul' : 'span');
+
+    if (command === 'bold') {
+        newNode.style.fontWeight = 'bold';
+    } else if (command === 'italic') {
+        newNode.style.fontStyle = 'italic';
+    } else if (command === 'underline') {
+        newNode.style.textDecoration = 'underline';
+    } else if (command === 'foreColor') {
+        newNode.style.color = value;
+    } else if (command === 'fontSize') {
+        newNode.style.fontSize = value;
+    } else if (command === 'fontName') {
+        newNode.style.fontFamily = value;
+    } else if (command === 'justifyLeft') {
+        newNode.style.textAlign = 'left';
+    } else if (command === 'justifyCenter') {
+        newNode.style.textAlign = 'center';
+    } else if (command === 'justifyRight') {
+        newNode.style.textAlign = 'right';
+    } else if (command === 'insertOrderedList') {
+        newNode.tagName = 'ol';
+    } else if (command === 'insertUnorderedList') {
+        newNode.tagName = 'ul';
+    }
+
+    range.deleteContents();
+    range.insertNode(newNode);
+    selection.removeAllRanges();
+    selection.addRange(range);
 }
 
 // تغيير لون النص
@@ -10,12 +41,12 @@ function changeColor(color) {
 
 // تغيير حجم الخط
 function changeFontSize(size) {
-    document.execCommand('fontSize', false, size);
+    formatText('fontSize', size);
 }
 
 // تغيير نوع الخط
 function changeFontFamily(font) {
-    document.execCommand('fontName', false, font);
+    formatText('fontName', font);
 }
 
 // إدراج معادلة
@@ -26,7 +57,11 @@ function insertMath() {
             const editor = document.getElementById("editor");
             const mathContent = `\\(${math}\\)`;
             editor.innerHTML += mathContent;
-            MathJax.typesetPromise(); // تحديث عرض المعادلات
+            MathJax.typesetPromise().then(() => {
+                alert("المعادلة أُدخلت بنجاح.");
+            }).catch((error) => {
+                alert("حدث خطأ أثناء إدراج المعادلة. يرجى التحقق من صيغة LaTeX.");
+            });
         } catch (error) {
             alert("حدث خطأ أثناء إدراج المعادلة. يرجى التحقق من صيغة LaTeX.");
         }
@@ -42,7 +77,7 @@ function insertTable() {
         for (let i = 0; i < rows; i++) {
             table += '<tr>';
             for (let j = 0; j < cols; j++) {
-                table += `<td>${i + 1},${j + 1}</td>`;
+                table += `<td contenteditable="true">${i + 1},${j + 1}</td>`;
             }
             table += '</tr>';
         }
@@ -59,6 +94,10 @@ function insertImage(event) {
         reader.onload = function (e) {
             const img = document.createElement('img');
             img.src = e.target.result;
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+            img.style.display = 'block';
+            img.style.margin = '0 auto';
             document.getElementById('editor').appendChild(img);
         };
         reader.readAsDataURL(file);
@@ -77,7 +116,8 @@ function exportToPDF() {
         filename: 'document.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css'], before: '.page-break' }
     };
     html2pdf().from(element).set(opt).save();
 }
@@ -97,6 +137,11 @@ function exportToTXT() {
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     document.getElementById('editor').classList.toggle('dark-mode');
+    if (document.body.classList.contains('dark-mode')) {
+        document.body.style.transition = 'background-color 0.3s, color 0.3s';
+    } else {
+        document.body.style.transition = 'background-color 0.3s, color 0.3s';
+    }
 }
 
 // حفظ المحتوى تلقائيًا
