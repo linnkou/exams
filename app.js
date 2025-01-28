@@ -1,13 +1,15 @@
-function exportPDF() {
-    const element = document.getElementById('editor');
-    const content = element.innerHTML;
+// تنسيق النص
+function formatText(command) {
+    document.execCommand(command, false, null);
+}
 
-    const opt = {
-        margin: 1,
-        filename: 'document.pdf',
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().from(content).set(opt).save();
+// إدراج معادلة رياضية بصيغة LaTeX
+function insertMath() {
+    const math = prompt("اكتب معادلتك بصيغة LaTeX:");
+    if (math) {
+        const editor = document.getElementById("editor");
+        const mathContent = `\\(${math}\\)`;
+        editor.innerHTML += mathContent;
+        MathJax.typesetPromise(); // تحديث عرض المعادلات
+    }
 }
