@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرر النصوص مع الرموز الرياضية</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>محرر النصوص مع الرموز الرياضية</h1>
+        <textarea id="editor" placeholder="اكتب موضوعك هنا..."></textarea>
+        <div id="preview"></div>
+        <button onclick="updatePreview()">عرض المعاينة</button>
+        <button onclick="exportPDF()">تصدير إلى PDF</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
