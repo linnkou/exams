@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>محرر مواضيع الاختبارات</title>
   <!-- تحميل TinyMCE مع مفتاح API -->
-  <script src="https://cdn.tiny.cloud/1/i8duevhin8sitf2d7edghug4fr7lqr9x2rlezipiul7y3c17/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/i8duevhin8sitf2d7edghug4fr7lqr9x2rlezipiul7y3c17/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
   <!-- تحميل MathJax -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -50,11 +50,17 @@
       language: 'ar', // تعيين اللغة إلى العربية
       directionality: 'rtl', // تعيين الاتجاه إلى اليمين
       plugins: [
-        'link', 'image', 'table', 'lists', 'media', 'wordcount', 'mathjax' // إضافة ميزة MathJax
+        'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+        'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword', 'exportword', 'exportpdf'
       ],
-      toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist | mathjax',
-      content_css: 'https://fonts.googleapis.com/css?family=Cairo&display=swap', // تحسين الخطوط
-      font_formats: 'Cairo=Cairo', // تعيين خطوط مخصصة
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+      mergetags_list: [
+        { value: 'First.Name', title: 'First Name' },
+        { value: 'Email', title: 'Email' },
+      ],
+      ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
       mathjax_usage: 'mathjax', // تفعيل MathJax
       mathjax_config: {
         tex: {
