@@ -4,15 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محرر النصوص والمعادلات</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="editor-container">
-        <h1>محرر النصوص والمعادلات</h1>
-        <div id="editor" contenteditable="true" class="editor"></div>
-        <button onclick="exportPDF()">تحميل PDF</button>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <div class="container mx-auto mt-10 p-4 bg-white rounded shadow">
+        <h1 class="text-2xl font-bold text-center mb-4">محرر النصوص والمعادلات</h1>
+
+        <!-- شريط الأدوات -->
+        <div class="toolbar flex gap-2 mb-4">
+            <button onclick="formatText('bold')" class="bg-blue-500 text-white px-4 py-2 rounded">عريض</button>
+            <button onclick="formatText('italic')" class="bg-blue-500 text-white px-4 py-2 rounded">مائل</button>
+            <button onclick="insertMath()" class="bg-green-500 text-white px-4 py-2 rounded">إدراج معادلة</button>
+        </div>
+
+        <!-- المحرر -->
+        <div id="editor" contenteditable="true" class="editor border border-gray-300 p-4 rounded bg-gray-50 min-h-[200px]">
+            ابدأ بالكتابة هنا...
+        </div>
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>
