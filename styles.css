@@ -1,23 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
+.editor {
     direction: rtl;
     text-align: right;
-    margin: 0;
-    padding: 20px;
-}
-
-.editor-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.editor {
-    min-height: 200px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    background: #fff;
 }
