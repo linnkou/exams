@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>محرر مواضيع الاختبارات</title>
-  <!-- تحميل TinyMCE مع مفتاح API -->
   <script src="https://cdn.tiny.cloud/1/i8duevhin8sitf2d7edghug4fr7lqr9x2rlezipiul7y3c17/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-  <!-- تحميل KaTeX -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
-  <!-- CSS الداخلي -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     body {
       font-family: 'Cairo', sans-serif;
@@ -17,7 +14,6 @@
       background-color: #f9f9f9;
       color: #333;
     }
-
     textarea {
       width: 100%;
       height: 400px;
@@ -25,12 +21,10 @@
       border-radius: 5px;
       padding: 10px;
     }
-
     h1 {
       text-align: center;
       color: #4CAF50;
     }
-
     .tox-tbtn__select-label {
       font-family: 'Cairo', sans-serif;
     }
@@ -43,20 +37,19 @@
   <script>
     tinymce.init({
       selector: '#editor',
-      language: 'ar', // تعيين اللغة إلى العربية
-      directionality: 'rtl', // تعيين الاتجاه إلى اليمين
+      language: 'ar',
+      directionality: 'rtl',
       plugins: [
         'link', 'image', 'table', 'lists', 'media', 'wordcount'
       ],
       toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist | insertmath',
-      content_css: 'https://fonts.googleapis.com/css?family=Cairo&display=swap', // تحسين الخطوط
-      font_formats: 'Cairo=Cairo', // تعيين خطوط مخصصة
+      content_css: 'https://fonts.googleapis.com/css?family=Cairo&display=swap',
+      font_formats: 'Cairo=Cairo',
       setup: function (editor) {
         editor.ui.registry.addButton('insertmath', {
           text: 'معادلة رياضية',
-          icon: '∑', // رمز المعادلة
+          icon: '∑',
           onAction: function () {
-            // فتح نافذة لكتابة المعادلات الرياضية
             editor.windowManager.open({
               title: 'كتابة معادلة رياضية',
               body: {
@@ -127,9 +120,7 @@
               ],
               onSubmit: function (api) {
                 const equation = api.getData().equation;
-                const renderedEquation = katex.renderToString(equation, {
-                  throwOnError: false
-                });
+                const renderedEquation = `\\(${equation}\\)`; // استخدام MathJax
                 editor.insertContent(renderedEquation);
                 api.close();
               }
