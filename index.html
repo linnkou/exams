@@ -5,9 +5,9 @@
   <title>محرر مواضيع الاختبارات</title>
   <!-- تحميل TinyMCE مع مفتاح API -->
   <script src="https://cdn.tiny.cloud/1/i8duevhin8sitf2d7edghug4fr7lqr9x2rlezipiul7y3c17/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-  <!-- تحميل KaTeX -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+  <!-- تحميل MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <!-- CSS الداخلي -->
   <style>
     body {
@@ -34,6 +34,10 @@
     .tox-tbtn__select-label {
       font-family: 'Cairo', sans-serif;
     }
+
+    .MathJax {
+      font-family: 'Cairo', sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -46,18 +50,17 @@
       language: 'ar', // تعيين اللغة إلى العربية
       directionality: 'rtl', // تعيين الاتجاه إلى اليمين
       plugins: [
-        'link', 'image', 'table', 'lists', 'media', 'wordcount'
+        'link', 'image', 'table', 'lists', 'media', 'wordcount' // إضافة ميزة الرياضيات يدويًا
       ],
-      toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist | insertmath',
+      toolbar: 'undo redo | styleselect | bold italic | link image | alignleft aligncenter alignright | outdent indent | table | numlist bullist | mathjax',
       content_css: 'https://fonts.googleapis.com/css?family=Cairo&display=swap', // تحسين الخطوط
       font_formats: 'Cairo=Cairo', // تعيين خطوط مخصصة
       setup: function (editor) {
-        editor.ui.registry.addButton('insertmath', {
+        editor.ui.registry.addButton('mathjax', {
           text: 'معادلة رياضية',
           icon: '∑', // رمز المعادلة
           onAction: function () {
-            console.log('زر معادلة رياضية تم النقر عليه'); // لمراقبة الحدث
-
+            // فتح نافذة لكتابة المعادلات الرياضية
             editor.windowManager.open({
               title: 'كتابة معادلة رياضية',
               body: {
@@ -84,17 +87,14 @@
               ],
               onSubmit: function (api) {
                 const equation = api.getData().equation;
-                console.log('المعادلة المُدخلة:', equation); // تسجيل المدخلات
-
-                try {
-                  const renderedEquation = katex.renderToString(equation, { throwOnError: false });
-                  editor.insertContent(`<p>${renderedEquation}</p>`);
-                } catch (error) {
-                  console.error('خطأ في تحويل المعادلة:', error);
-                  alert('حدث خطأ أثناء تحويل المعادلة، تأكد من صحة التنسيق.');
-                }
-                
+                // إدراج المعادلة بتنسيق MathJax
+                editor.insertContent(`$$${equation}$$`);
                 api.close();
+
+                // إعادة معالجة MathJax للمعادلة الجديدة
+                MathJax.typesetPromise()
+                  .then(() => console.log('تمت معالجة المعادلة بنجاح'))
+                  .catch((err) => console.error('خطأ أثناء معالجة المعادلة:', err));
               }
             });
           }
